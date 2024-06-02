@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "WebApp_EstanteVirtual/1.0.0": {
+        "runtime": {
+          "WebApp_EstanteVirtual.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "WebApp_EstanteVirtual/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
