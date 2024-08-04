@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApp_EstanteVirtual.Data;
 using WebApp_EstanteVirtual.Models;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace WebApp_EstanteVirtual.Controllers
 {
@@ -15,59 +14,79 @@ namespace WebApp_EstanteVirtual.Controllers
             _context = context;
         }
 
-        // GET: Livros
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Livros.ToListAsync());
+            var livros = _context.Livros.ToList();
+            return View(livros);
         }
 
-        // GET: Livros/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var livro = await _context.Livros
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (livro == null)
-            {
-                return NotFound();
-            }
-
-            return View(livro);
-        }
-
-        // GET: Livros/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Livros/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,Preco,Marca,QuantidadeEmEstoque,DataVenda")] Livro livro)
+        public IActionResult Create(CreateLivroViewModel model)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(livro);
-                await _context.SaveChangesAsync();
+                var livro = new Livro
+                {
+                    Nome = model.Nome,
+                    Preco = model.Preco,
+                    Marca = model.Marca,
+                    QuantidadeEstoque = model.QuantidadeEstoque
+                };
+                _context.Livros.Add(livro);
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
-            return View(livro);
+            return View(model);
         }
 
-        // GET: Livros/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int id)
         {
-            if (id == null)
+            var livro = _context.Livros.Find(id);
+            if (livro == null)
             {
                 return NotFound();
             }
+            var model = new CreateLivroViewModel
+            {
+                Id = livro.Id,
+                Nome = livro.Nome,
+                Preco = livro.Preco,
+                Marca = livro.Marca,
+                QuantidadeEstoque = livro.QuantidadeEstoque
+            };
+            return View(model);
+        }
 
-            var livro = await _context.Livros.FindAsync(id);
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(CreateLivroViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var livro = _context.Livros.Find(model.Id);
+                if (livro == null)
+                {
+                    return NotFound();
+                }
+                livro.Nome = model.Nome;
+                livro.Preco = model.Preco;
+                livro.Marca = model.Marca;
+                livro.QuantidadeEstoque = model.QuantidadeEstoque;
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(model);
+        }
+
+        public IActionResult Delete(int id)
+        {
+            var livro = _context.Livros.Find(id);
             if (livro == null)
             {
                 return NotFound();
@@ -75,71 +94,17 @@ namespace WebApp_EstanteVirtual.Controllers
             return View(livro);
         }
 
-        // POST: Livros/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Preco,Marca,QuantidadeEmEstoque,DataVenda")] Livro livro)
+        public IActionResult Delete(int id, IFormCollection collection)
         {
-            if (id != livro.Id)
+            var livro = _context.Livros.Find(id);
+            if (livro != null)
             {
-                return NotFound();
+                _context.Livros.Remove(livro);
+                _context.SaveChanges();
             }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(livro);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!LivroExists(livro.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(livro);
-        }
-
-        // GET: Livros/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var livro = await _context.Livros
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (livro == null)
-            {
-                return NotFound();
-            }
-
-            return View(livro);
-        }
-
-        // POST: Livros/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var livro = await _context.Livros.FindAsync(id);
-            _context.Livros.Remove(livro);
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool LivroExists(int id)
-        {
-            return _context.Livros.Any(e => e.Id == id);
         }
     }
 }

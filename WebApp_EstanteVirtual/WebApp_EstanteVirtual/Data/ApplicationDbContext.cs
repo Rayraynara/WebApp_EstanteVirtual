@@ -4,7 +4,7 @@ using WebApp_EstanteVirtual.Models;
 
 namespace WebApp_EstanteVirtual.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<Usuario>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -12,7 +12,6 @@ namespace WebApp_EstanteVirtual.Data
         }
 
         public DbSet<Livro> Livros { get; set; }
-        public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Venda> Vendas { get; set; }
     }
 }

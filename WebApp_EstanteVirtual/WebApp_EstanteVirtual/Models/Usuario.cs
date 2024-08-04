@@ -1,15 +1,26 @@
-﻿namespace WebApp_EstanteVirtual.Models
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
+
+namespace WebApp_EstanteVirtual.Models
 {
-    public class Usuario
+    public class Usuario : IdentityUser
     {
-        public int Id { get; set; }
+        [Required]
         public string Nome { get; set; }
+
+        [Required]
         public string CPF { get; set; }
-        public string Email { get; set; }
+
+        [Required]
         public string Telefone { get; set; }
+
+        [Required]
         public string Endereco { get; set; }
-        public string Cep { get; set; }
-        public string NumeroCartaoCredito { get; set; }
-        public string Senha { get; set; }
+
+        [Required]
+        public string CEP { get; set; }
+
+        [Required]
+        public string NumeroCartao { get; set; }
     }
 }
