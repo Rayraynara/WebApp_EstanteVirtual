@@ -59,6 +59,7 @@ namespace WebApp_EstanteVirtual.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false, lockoutOnFailure: false);
+               
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Home");
