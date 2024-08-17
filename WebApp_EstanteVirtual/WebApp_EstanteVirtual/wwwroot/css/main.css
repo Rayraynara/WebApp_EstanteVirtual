@@ -28,7 +28,7 @@ body {
     box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.4);
     gap: 15px; /* Espaçamento aumentado entre os elementos do formulário */
     width: 100%; /* Ocupa a largura total disponível do contêiner pai */
-    max-width: 600px; /* Define a largura máxima do formulário */
+    max-width: 400px; /* Define a largura máxima do formulário */
 }
 
 .areaLogin img {

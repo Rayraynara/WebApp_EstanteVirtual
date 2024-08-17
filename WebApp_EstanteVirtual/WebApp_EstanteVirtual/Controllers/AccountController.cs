@@ -17,6 +17,32 @@ namespace WebApp_EstanteVirtual.Controllers
         }
 
         [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new Usuario { UserName = model.Email, Email = model.Email };
+                var result = await _userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return RedirectToAction("Index", "Home");
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+            return View(model);
+        }
+
+        [HttpGet]
         public IActionResult Login()
         {
             return View();
@@ -37,7 +63,6 @@ namespace WebApp_EstanteVirtual.Controllers
                     ModelState.AddModelError(string.Empty, "Tentativa de login inválida.");
                 }
             }
-
             return View(model);
         }
 
