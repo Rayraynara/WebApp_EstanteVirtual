@@ -7,16 +7,16 @@ namespace WebApp_EstanteVirtual.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly SignInManager<Usuario> _signInManager;
         private readonly UserManager<Usuario> _userManager;
+        private readonly SignInManager<Usuario> _signInManager;
 
-        public AccountController(SignInManager<Usuario> signInManager, UserManager<Usuario> userManager)
+        public AccountController(UserManager<Usuario> userManager, SignInManager<Usuario> signInManager)
         {
-            _signInManager = signInManager;
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
-        [HttpGet]
+        // Action para a página de registro
         public IActionResult Register()
         {
             return View();
@@ -27,25 +27,30 @@ namespace WebApp_EstanteVirtual.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new Usuario { 
-
-                    UserName = model.Email,
-                    Email = model.Email 
+                var user = new Usuario
+                {
+                    UserName = model.Email.Length >= 5 ? model.Email.Substring(0, 5) : model.Email,
+                    Email = model.Email,
+                    CPF = model.CPF
                 };
 
                 var result = await _userManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Home");
                 }
+
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
+
             return View(model);
         }
+
 
         [HttpGet]
         public IActionResult Login()
@@ -59,7 +64,7 @@ namespace WebApp_EstanteVirtual.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false, lockoutOnFailure: false);
-               
+
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Home");
@@ -80,3 +85,7 @@ namespace WebApp_EstanteVirtual.Controllers
         }
     }
 }
+
+
+    
+

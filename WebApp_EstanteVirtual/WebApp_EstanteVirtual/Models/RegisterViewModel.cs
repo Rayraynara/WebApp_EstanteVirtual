@@ -17,5 +17,9 @@ namespace WebApp_EstanteVirtual.Models
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Senhas não correspondem.")]
         public string ConfirmPassword { get; set; }
+
+        [Required(ErrorMessage = "O CPF é obrigatório.")]
+        [StringLength(11, MinimumLength = 11, ErrorMessage = "O CPF deve ter 11 dígitos.")]
+        public string CPF { get; set; }
     }
 }
