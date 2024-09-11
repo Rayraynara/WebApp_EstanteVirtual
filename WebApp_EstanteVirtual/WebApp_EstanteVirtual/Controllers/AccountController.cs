@@ -1,19 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+using WebApp_EstanteVirtual.Data;
 using WebApp_EstanteVirtual.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApp_EstanteVirtual.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<Usuario> _userManager;
-        private readonly SignInManager<Usuario> _signInManager;
+        private readonly ApplicationDbContext _context;
 
-        public AccountController(UserManager<Usuario> userManager, SignInManager<Usuario> signInManager)
+        public AccountController(ApplicationDbContext context)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
+            _context = context;
         }
 
         // Action para a página de registro
@@ -29,28 +31,24 @@ namespace WebApp_EstanteVirtual.Controllers
             {
                 var user = new Usuario
                 {
-                    UserName = model.Email.Length >= 5 ? model.Email.Substring(0, 5) : model.Email,
+                    Id = Guid.NewGuid().ToString(), // Gerar um novo Id
+                    Nome = model.Email.Length >= 5 ? model.Email.Substring(0, 5) : model.Email,
                     Email = model.Email,
-                    CPF = model.CPF
+                    CPF = model.CPF,
+                    // Aqui você pode adicionar a lógica para armazenar a senha de forma segura
                 };
 
-                var result = await _userManager.CreateAsync(user, model.Password);
+                _context.Usuarios.Add(user);
+                await _context.SaveChangesAsync();
 
-                if (result.Succeeded)
-                {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
-                }
+                // Definir o cookie de autenticação manualmente
+                HttpContext.Session.SetString("UserId", user.Id);
 
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
+                return RedirectToAction("Index", "Home");
             }
 
             return View(model);
         }
-
 
         [HttpGet]
         public IActionResult Login()
@@ -63,10 +61,14 @@ namespace WebApp_EstanteVirtual.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false, lockoutOnFailure: false);
+                var user = await _context.Usuarios
+                    .FirstOrDefaultAsync(u => u.Email == model.Email);
 
-                if (result.Succeeded)
+                if (user != null)
                 {
+                    // Definir o cookie de autenticação manualmente
+                    HttpContext.Session.SetString("UserId", user.Id);
+
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -78,14 +80,11 @@ namespace WebApp_EstanteVirtual.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Logout()
+        public IActionResult Logout()
         {
-            await _signInManager.SignOutAsync();
+            HttpContext.Session.Remove("UserId");
             return RedirectToAction("Index", "Home");
         }
     }
 }
-
-
-    
 

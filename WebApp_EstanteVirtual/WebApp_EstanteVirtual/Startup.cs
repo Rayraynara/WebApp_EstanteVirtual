@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebApp_EstanteVirtual.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Identity;
 using WebApp_EstanteVirtual.Models;
 
 namespace WebApp_EstanteVirtual
@@ -26,22 +25,20 @@ namespace WebApp_EstanteVirtual
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<Usuario, IdentityRole>(options =>
-            {
-                options.Password.RequireDigit = true;
-                options.Password.RequiredLength = 6;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = true;
-                options.Password.RequireLowercase = false;
-            })
-            .AddEntityFrameworkStores<ApplicationDbContext>()
-            .AddDefaultTokenProviders();
-
+            //  autenticação com cookies
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
                     options.LoginPath = "/Account/Login";
                 });
+
+            // sessão
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30); // Tempo de expiração da sessão
+                options.Cookie.HttpOnly = true; // Cookie acessível apenas via HTTP
+                options.Cookie.IsEssential = true; // Cookie é essencial para a aplicação
+            });
 
             services.AddControllersWithViews();
         }
@@ -63,7 +60,12 @@ namespace WebApp_EstanteVirtual
 
             app.UseRouting();
 
+            //  middleware de sessão
+            app.UseSession();
+
+            //autenticação
             app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

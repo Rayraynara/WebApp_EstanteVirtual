@@ -3,8 +3,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebApp_EstanteVirtual.Models
 {
-    public class Usuario : IdentityUser
+    public class Usuario
     {
+        [Key]
+        public string Id { get; set; }
+
         [Required]
         public string Nome { get; set; }
 
@@ -12,15 +15,18 @@ namespace WebApp_EstanteVirtual.Models
         public string CPF { get; set; }
 
         [Required]
+        public string Email { get; set; }
+
+        [Required]
+        public string Senha { get; set; }
+
         public string Telefone { get; set; }
 
-        [Required]
         public string Endereco { get; set; }
 
-        [Required]
         public string CEP { get; set; }
 
-        [Required]
         public string NumeroCartao { get; set; }
     }
 }
+
