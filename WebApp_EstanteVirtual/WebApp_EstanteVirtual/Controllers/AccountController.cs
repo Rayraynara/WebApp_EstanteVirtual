@@ -32,10 +32,11 @@ namespace WebApp_EstanteVirtual.Controllers
                 var user = new Usuario
                 {
                     Id = Guid.NewGuid().ToString(), // Gerar um novo Id
-                    Nome = model.Email.Length >= 5 ? model.Email.Substring(0, 5) : model.Email,
+                    Nome = model.UserName,
                     Email = model.Email,
                     CPF = model.CPF,
-                    // Aqui você pode adicionar a lógica para armazenar a senha de forma segura
+                    Senha = model.Password,
+                    IsAdmin = false
                 };
 
                 _context.Usuarios.Add(user);

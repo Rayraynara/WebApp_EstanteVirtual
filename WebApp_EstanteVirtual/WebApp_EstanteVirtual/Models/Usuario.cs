@@ -20,13 +20,15 @@ namespace WebApp_EstanteVirtual.Models
         [Required]
         public string Senha { get; set; }
 
-        public string Telefone { get; set; }
+        public string? Telefone { get; set; }
 
-        public string Endereco { get; set; }
+        public string? Endereco { get; set; }
 
-        public string CEP { get; set; }
+        public string? CEP { get; set; }
 
-        public string NumeroCartao { get; set; }
+        public string? NumeroCartao { get; set; }
+
+        public bool? IsAdmin { get; set; }
     }
 }
 

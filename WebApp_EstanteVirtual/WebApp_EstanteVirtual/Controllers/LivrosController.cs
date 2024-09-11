@@ -35,8 +35,9 @@ namespace WebApp_EstanteVirtual.Controllers
                 {
                     Nome = model.Nome,
                     Preco = model.Preco,
-                    Marca = model.Marca,
-                    QuantidadeEstoque = model.QuantidadeEstoque
+                    Editora = model.Editora,
+                    QuantidadeEstoque = model.QuantidadeEstoque,
+                    Capa = model.Capa
                 };
                 _context.Livros.Add(livro);
                 _context.SaveChanges();
@@ -57,8 +58,9 @@ namespace WebApp_EstanteVirtual.Controllers
                 Id = livro.Id,
                 Nome = livro.Nome,
                 Preco = livro.Preco,
-                Marca = livro.Marca,
-                QuantidadeEstoque = livro.QuantidadeEstoque
+                Editora = livro.Editora,
+                QuantidadeEstoque = livro.QuantidadeEstoque,
+                Capa = livro.Capa
             };
             return View(model);
         }
@@ -76,7 +78,7 @@ namespace WebApp_EstanteVirtual.Controllers
                 }
                 livro.Nome = model.Nome;
                 livro.Preco = model.Preco;
-                livro.Marca = model.Marca;
+                livro.Editora = model.Editora;
                 livro.QuantidadeEstoque = model.QuantidadeEstoque;
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));

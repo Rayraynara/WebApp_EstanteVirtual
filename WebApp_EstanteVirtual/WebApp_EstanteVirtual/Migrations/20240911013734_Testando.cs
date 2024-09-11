@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebApp_EstanteVirtual.Migrations
 {
-    public partial class NovaMigrationEstanteV : Migration
+    public partial class Testando : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,8 +17,9 @@ namespace WebApp_EstanteVirtual.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Preco = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    Marca = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Editora = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     QuantidadeEstoque = table.Column<int>(type: "int", nullable: false),
+                    Capa = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DataVenda = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -38,7 +39,8 @@ namespace WebApp_EstanteVirtual.Migrations
                     Telefone = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Endereco = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CEP = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NumeroCartao = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    NumeroCartao = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsAdmin = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {

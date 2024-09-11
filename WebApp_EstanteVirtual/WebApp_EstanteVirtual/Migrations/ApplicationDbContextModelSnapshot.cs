@@ -30,10 +30,14 @@ namespace WebApp_EstanteVirtual.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("DataVenda")
+                    b.Property<string>("Capa")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DataVenda")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Marca")
+                    b.Property<string>("Editora")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -59,7 +63,6 @@ namespace WebApp_EstanteVirtual.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CEP")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CPF")
@@ -71,15 +74,16 @@ namespace WebApp_EstanteVirtual.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Endereco")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("IsAdmin")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NumeroCartao")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Senha")
@@ -87,7 +91,6 @@ namespace WebApp_EstanteVirtual.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Telefone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
