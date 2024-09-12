@@ -16,6 +16,8 @@ namespace WebApp_EstanteVirtual.Models
 
         public string Capa { get; set; }
 
+        public bool Novo { get; set; }
+
         public DateTime? DataVenda { get; set; }
     }
 }

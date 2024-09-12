@@ -20,5 +20,8 @@ namespace WebApp_EstanteVirtual.Models
 
         [Required(ErrorMessage ="A Imagem da Capa do Livro é obrigatória")]
         public string Capa { get; set; }
+
+        [Required(ErrorMessage = "A Condição do Livro é obrigatória")]
+        public bool Novo { get; set; }
     }
 }

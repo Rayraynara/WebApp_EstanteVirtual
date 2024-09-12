@@ -45,6 +45,9 @@ namespace WebApp_EstanteVirtual.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("Novo")
+                        .HasColumnType("bit");
+
                     b.Property<decimal>("Preco")
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");

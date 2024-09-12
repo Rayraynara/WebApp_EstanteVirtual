@@ -12,8 +12,8 @@ using WebApp_EstanteVirtual.Data;
 namespace WebApp_EstanteVirtual.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240911013734_Testando")]
-    partial class Testando
+    [Migration("20240912234216_Teste")]
+    partial class Teste
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,6 +46,9 @@ namespace WebApp_EstanteVirtual.Migrations
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Novo")
+                        .HasColumnType("bit");
 
                     b.Property<decimal>("Preco")
                         .HasPrecision(18, 2)

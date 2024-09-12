@@ -37,7 +37,8 @@ namespace WebApp_EstanteVirtual.Controllers
                     Preco = model.Preco,
                     Editora = model.Editora,
                     QuantidadeEstoque = model.QuantidadeEstoque,
-                    Capa = model.Capa
+                    Capa = model.Capa,
+                    Novo = model.Novo
                 };
                 _context.Livros.Add(livro);
                 _context.SaveChanges();
