@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WebApp_EstanteVirtual.Data;
 using WebApp_EstanteVirtual.Models;
 using Microsoft.EntityFrameworkCore;
+using WebApp_EstanteVirtual.Services;
 
 namespace WebApp_EstanteVirtual.Controllers
 {
@@ -31,11 +32,11 @@ namespace WebApp_EstanteVirtual.Controllers
             {
                 var user = new Usuario
                 {
-                    Id = Guid.NewGuid().ToString(), // Gerar um novo Id
+                    Id = Guid.NewGuid().ToString(), 
                     Nome = model.UserName,
                     Email = model.Email,
                     CPF = model.CPF,
-                    Senha = model.Password,
+                    Senha = CryptographyService.EncryptPassword(model.Password),
                     IsAdmin = false
                 };
 
@@ -60,12 +61,12 @@ namespace WebApp_EstanteVirtual.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            if (ModelState.IsValid)
+             if (ModelState.IsValid)
             {
                 var user = await _context.Usuarios
                     .FirstOrDefaultAsync(u => u.Email == model.Email);
 
-                if (user != null)
+                if (user != null && IsPasswordValid(user.Senha, model.Password))
                 {
                     // Definir o cookie de autenticação manualmente
                     HttpContext.Session.SetString("UserId", user.Id);
@@ -74,17 +75,27 @@ namespace WebApp_EstanteVirtual.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Tentativa de login inválida.");
+                    ModelState.AddModelError(string.Empty, "Tentativa de login inválida. Verifique os dados e tente novamente.");
                 }
             }
             return View(model);
         }
+
+       
 
         [HttpPost]
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("UserId");
             return RedirectToAction("Index", "Home");
+        }
+
+        private bool IsPasswordValid(string storedPassword, string password)
+        {
+            if (CryptographyService.EncryptPassword(password).Equals(storedPassword))
+                    return true;
+
+            return false;
         }
     }
 }
