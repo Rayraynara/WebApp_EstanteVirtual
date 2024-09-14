@@ -1,27 +1,69 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebApp_EstanteVirtual.Data;
 using WebApp_EstanteVirtual.Models;
-using System.Linq;
 
-namespace WebApp_EstanteVirtual.Controllers
+public class VendasController : Controller
 {
-    public class VendasController : Controller
-    {
-        private readonly ApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
 
-        public VendasController(ApplicationDbContext context)
+    public VendasController(ApplicationDbContext context)
+    {
+        _context = context;
+    }
+
+    public IActionResult LivrosDisponiveis()
+    {
+        var livrosDisponiveis = _context.Livros
+            .Where(l => l.QuantidadeEstoque > 0)
+            .ToList();
+
+        return View("VendasLayout", livrosDisponiveis);
+    }
+
+    [Authorize]
+    public IActionResult Comprar(int id)
+    {
+        var livro = _context.Livros.Find(id);
+        if (livro == null)
         {
-            _context = context;
+            return NotFound();
         }
 
-        public IActionResult Relatorio()
+        return View(livro);
+    }
+
+    [HttpPost]
+    [Authorize]
+    [ValidateAntiForgeryToken]
+    public IActionResult Comprar(int id, [FromForm] CompraViewModel model)
+    {
+        var livro = _context.Livros.Find(id);
+        if (livro == null)
         {
-            var vendas = _context.Vendas.ToList();
-            var model = new VendasRelatorioViewModel
+            return NotFound();
+        }
+
+        if (livro.QuantidadeEstoque > 0)
+        {
+            livro.QuantidadeEstoque--;
+
+            var venda = new Venda
             {
-                Vendas = vendas
+                Livro = livro,
+                DataHora = DateTime.Now,
+                Total = livro.Preco
             };
-            return View(model);
+
+            _context.Vendas.Add(venda);
+            _context.SaveChanges();
+
+            return RedirectToAction("LivrosDisponiveis"); // Redirecionado para a view de compras
+        }
+        else
+        {
+            ModelState.AddModelError("", "Este livro não está mais disponível no estoque.");
+            return View(livro);
         }
     }
 }

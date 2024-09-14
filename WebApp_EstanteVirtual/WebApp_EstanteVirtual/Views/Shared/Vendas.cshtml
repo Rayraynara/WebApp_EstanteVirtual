@@ -1,0 +1,27 @@
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Threading;
+using WebApp_EstanteVirtual.Models;
+
+@model WebApp_EstanteVirtual.Models.VendasRelatorioViewModel
+
+<h2> Relatório de Vendas</h2>
+
+<table class="table">
+    < thead >
+    < tr >
+    < th > Data e Hora</th>
+    <th>Livro</th>
+    <th>Total</th>
+    </tr>
+    </thead>
+    <tbody>
+                    @foreach (var venda in Model.Vendas)
+                    {
+            < tr >
+            < td > @venda.DataHora </ td >
+            < td > @venda.Livro.Nome </ td >
+            < td > @venda.Total </ td >
+            </ tr >
+                    }
+        </ tbody >
+        </ table >

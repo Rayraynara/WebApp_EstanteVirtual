@@ -1,0 +1,42 @@
+﻿@model IEnumerable<WebApp_EstanteVirtual.Models.Livro>
+
+@{
+    ViewData["Title"] = "Livros Disponíveis para Venda/Aluguel";
+}
+
+<div class="container">
+    <h2 class="text-center mt-5">Livros Disponíveis para Venda/Aluguel</h2>
+    <div class="row">
+        @foreach (var livro in Model)
+        {
+            <div class="col-md-4 mt-4">
+                <div class="card shadow-sm">
+                    @if (!string.IsNullOrEmpty(livro.Capa))
+                    {
+                        <img src="~/images/livros/@livro.Capa" class="card-img-top" alt="@livro.Nome" style="height: 250px; object-fit: cover;">
+                    }
+                    else
+                    {
+                        <img src="~/images/livros/default.jpg" class="card-img-top" alt="Imagem padrão" style="height: 250px; object-fit: cover;">
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title">@livro.Nome</h5>
+                        <p class="card-text">
+                            <strong>Editora:</strong> @livro.Editora<br>
+                            <strong>Preço:</strong> @livro.Preco.ToString("C")<br>
+                            <strong>Estoque:</strong> @livro.QuantidadeEstoque
+                        </p>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a href="@Url.Action("Comprar", "Vendas", new { id = livro.Id })" class="btn btn-primary btn-block">Alugar/Comprar</a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Login", "Account")" class="btn btn-secondary btn-block">Faça Login para Alugar/Comprar</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
