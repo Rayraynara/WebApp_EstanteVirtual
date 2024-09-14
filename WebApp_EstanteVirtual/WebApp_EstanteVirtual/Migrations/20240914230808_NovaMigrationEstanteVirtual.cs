@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebApp_EstanteVirtual.Migrations
 {
-    public partial class NovaMigrationDaEst : Migration
+    public partial class NovaMigrationEstanteVirtual : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -20,6 +20,7 @@ namespace WebApp_EstanteVirtual.Migrations
                     Editora = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     QuantidadeEstoque = table.Column<int>(type: "int", nullable: false),
                     Capa = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Novo = table.Column<bool>(type: "bit", nullable: false),
                     DataVenda = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>

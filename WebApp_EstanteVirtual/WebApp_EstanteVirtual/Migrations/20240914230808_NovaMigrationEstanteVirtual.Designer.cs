@@ -12,8 +12,8 @@ using WebApp_EstanteVirtual.Data;
 namespace WebApp_EstanteVirtual.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240912234216_Teste")]
-    partial class Teste
+    [Migration("20240914230808_NovaMigrationEstanteVirtual")]
+    partial class NovaMigrationEstanteVirtual
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
