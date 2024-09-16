@@ -13,7 +13,7 @@
                 <div class="card shadow-sm">
                     @if (!string.IsNullOrEmpty(livro.Capa))
                     {
-                        <img src="~/images/livros/@livro.Capa" class="card-img-top" alt="@livro.Nome" style="height: 250px; object-fit: cover;">
+                        <img src="@livro.Capa" class="card-img-top" alt="@livro.Nome" style="max-height: 250px; object-fit: cover;">
                     }
                     else
                     {
