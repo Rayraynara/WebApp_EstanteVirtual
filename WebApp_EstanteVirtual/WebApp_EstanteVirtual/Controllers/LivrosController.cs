@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebApp_EstanteVirtual.Data;
 using WebApp_EstanteVirtual.Models;
-using System.Linq;
 
 namespace WebApp_EstanteVirtual.Controllers
 {
@@ -14,20 +14,20 @@ namespace WebApp_EstanteVirtual.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var livros = _context.Livros.ToList();
+            var livros = await _context.Livros.ToListAsync();
             return View(livros);
         }
 
-        public IActionResult Create()
+        public IActionResult CadastrarLivro()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(CreateLivroViewModel model)
+        public async Task<IActionResult> CadastrarLivro(CreateLivroViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -41,15 +41,15 @@ namespace WebApp_EstanteVirtual.Controllers
                     Novo = model.Novo
                 };
                 _context.Livros.Add(livro);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
         }
 
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> EditarLivro(int id)
         {
-            var livro = _context.Livros.Find(id);
+            var livro = await _context.Livros.FindAsync(id);
             if (livro == null)
             {
                 return NotFound();
@@ -68,28 +68,33 @@ namespace WebApp_EstanteVirtual.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(CreateLivroViewModel model)
+        public async Task<IActionResult> EditarLivro(CreateLivroViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var livro = _context.Livros.Find(model.Id);
+                var livro = await _context.Livros.FindAsync(model.Id);
+                
                 if (livro == null)
                 {
                     return NotFound();
                 }
+
                 livro.Nome = model.Nome;
                 livro.Preco = model.Preco;
                 livro.Editora = model.Editora;
                 livro.QuantidadeEstoque = model.QuantidadeEstoque;
-                _context.SaveChanges();
+                livro.Capa = model.Capa;
+
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
         }
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> RemoverLivro(int id)
         {
-            var livro = _context.Livros.Find(id);
+            var livro = await _context.Livros.FindAsync(id);
+            
             if (livro == null)
             {
                 return NotFound();
@@ -97,16 +102,19 @@ namespace WebApp_EstanteVirtual.Controllers
             return View(livro);
         }
 
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> ConfirmarRemocao(int id)
         {
-            var livro = _context.Livros.Find(id);
+            var livro = await _context.Livros.FindAsync(id);
+            
             if (livro != null)
             {
                 _context.Livros.Remove(livro);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
+            
             return RedirectToAction(nameof(Index));
         }
     }

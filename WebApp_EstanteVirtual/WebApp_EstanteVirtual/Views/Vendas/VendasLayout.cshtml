@@ -17,18 +17,33 @@
                     </li>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("EditarConta", "Account")">Editar Conta</a>
-                        </li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("CadastrarLivro", "Livros")">Cadastrar Livro</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("EditarLivro", "Livros")">Editar Livro</a>
+                            </li>
+                        }
                     }
                 </ul>
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto align-items-center">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li class="nav-item">
-                            <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
-                                <button type="submit" class="btn btn-outline-danger">Logout</button>
-                            </form>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://pbs.twimg.com/media/ED5RbgNWsAIRbD8.png" alt="Perfil" class="rounded-circle me-2" style="width: 40px; height: 40px; object-fit: cover;">
+                                <span>Olá, @User.Identity.Name!</span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="@Url.Action("EditarConta", "Account")">Editar Conta</a></li>
+                                <li>
+                                    <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                                        <button type="submit" class="dropdown-item">Logout</button>
+                                    </form>
+                                </li>
+                            </ul>
                         </li>
                     }
                     else
@@ -66,7 +81,14 @@
                             </p>
                             @if (User.Identity.IsAuthenticated)
                             {
-                                <a href="@Url.Action("Comprar", "Vendas", new { id = livro.Id })" class="btn btn-primary btn-block">Comprar</a>
+                                if (User.IsInRole("Admin"))
+                                {
+                                    <a href="@Url.Action("Editar", "Livros", new { id = livro.Id })" class="btn btn-warning btn-block">Editar Livro</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("Comprar", "Vendas", new { id = livro.Id })" class="btn btn-primary btn-block">Comprar</a>
+                                }
                             }
                             else
                             {

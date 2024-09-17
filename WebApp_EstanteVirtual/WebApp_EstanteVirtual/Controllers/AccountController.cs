@@ -1,21 +1,17 @@
 ﻿
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using WebApp_EstanteVirtual.Data;
 using WebApp_EstanteVirtual.Models;
-using Microsoft.EntityFrameworkCore;
 using WebApp_EstanteVirtual.Services;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Identity;
 
 namespace WebApp_EstanteVirtual.Controllers
 {
     public class AccountController : Controller
-    { 
+    {
         private readonly ApplicationDbContext _context;
 
         public AccountController(ApplicationDbContext context)
@@ -23,7 +19,6 @@ namespace WebApp_EstanteVirtual.Controllers
             _context = context;
         }
 
-        // Action para a página de registro
         public IActionResult Register()
         {
             return View();
@@ -36,7 +31,7 @@ namespace WebApp_EstanteVirtual.Controllers
             {
                 var user = new Usuario
                 {
-                    Id = Guid.NewGuid().ToString(), 
+                    Id = Guid.NewGuid().ToString(),
                     Nome = model.UserName,
                     Email = model.Email,
                     CPF = model.CPF,
@@ -47,7 +42,6 @@ namespace WebApp_EstanteVirtual.Controllers
                 _context.Usuarios.Add(user);
                 await _context.SaveChangesAsync();
 
-                // Definir o cookie de autenticação manualmente
                 HttpContext.Session.SetString("UserId", user.Id);
 
                 return RedirectToAction("Index", "Home");
@@ -72,22 +66,22 @@ namespace WebApp_EstanteVirtual.Controllers
 
                 if (user != null && IsPasswordValid(user.Senha, model.Password))
                 {
-                    
+
                     var claims = new[]
                     {
                     new Claim(ClaimTypes.Name, user.Nome),
                     new Claim(ClaimTypes.Email, user.Email),
                     new Claim(ClaimTypes.Role, user.IsAdmin == true ? "Admin" : "User"),
                     new Claim(ClaimTypes.NameIdentifier, user.Id)
-                };
+                    };
 
                     var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                     var principal = new ClaimsPrincipal(identity);
 
-                    
+
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
-                    
+
                     HttpContext.Session.SetString("UserId", user.Id);
 
                     return RedirectToAction("Index", "Home");
@@ -105,7 +99,7 @@ namespace WebApp_EstanteVirtual.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            HttpContext.Session.Clear(); 
+            HttpContext.Session.Clear();
 
             return RedirectToAction("Index", "Home");
         }
@@ -114,7 +108,7 @@ namespace WebApp_EstanteVirtual.Controllers
         public async Task<IActionResult> EditarConta()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            
+
             if (userId == null)
             {
                 return RedirectToAction("Login");
@@ -147,7 +141,7 @@ namespace WebApp_EstanteVirtual.Controllers
             if (ModelState.IsValid)
             {
                 var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-                
+
                 if (userId == null)
                 {
                     return RedirectToAction("Login");
@@ -223,4 +217,3 @@ namespace WebApp_EstanteVirtual.Controllers
         }
     }
 }
-
