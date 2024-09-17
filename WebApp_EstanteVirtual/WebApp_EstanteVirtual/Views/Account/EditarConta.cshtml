@@ -1,0 +1,123 @@
+﻿@model WebApp_EstanteVirtual.Models.EditProfileViewModel
+
+@{
+    ViewData["Title"] = "Editar Conta";
+}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Estante Virtual</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Início</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-outline-danger">Logout</button>
+                            </form>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Login", "Account")">Login</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container mt-5">
+        <h2>Editar Conta</h2>
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["SuccessMessage"]
+            </div>
+        }
+        <form asp-action="EditarConta" method="post">
+            <div class="mb-3">
+                <label for="Nome" class="form-label">Nome</label>
+                <input type="text" class="form-control" id="Nome" name="Nome" value="@Model.Nome">
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label for="Email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="Email" name="Email" value="@Model.Email">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label for="Telefone" class="form-label">Telefone</label>
+                <input type="text" class="form-control" id="Telefone" name="Telefone" value="@Model.Telefone">
+            </div>
+            <div class="mb-3">
+                <label for="Endereco" class="form-label">Endereco</label>
+                <input type="text" class="form-control" id="Endereco" name="Endereco" value="@Model.Endereco">
+            </div>
+            <div class="mb-3">
+                <label for="CEP" class="form-label">CEP</label>
+                <input type="text" class="form-control" id="CEP" name="CEP" value="@Model.CEP">
+            </div>
+            <div class="mb-3">
+                <label for="NumeroCartao" class="form-label">Número do Cartão</label>
+                <input type="text" class="form-control" id="NumeroCartao" name="NumeroCartao" value="@Model.NumeroCartao">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+        </form>
+
+        <form method="post" class="mt-4">
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">Remover Conta</button>
+        </form>
+    </div>
+
+    <!-- Modal de Confirmação de Remoção de Conta/Usuário -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmação de Remoção</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Tem certeza de que deseja remover sua conta? Esta ação não pode ser desfeita.
+                </div>
+                <div class="modal-footer">
+                    <form asp-controller="Account" asp-action="DeleteAccount" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-danger">Remover Conta</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/inputmask@5.0.8/dist/inputmask.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Inputmask('(99) 99999-9999').mask('#Telefone');
+            Inputmask('99999-999').mask('#CEP');
+            Inputmask('9999 9999 9999 9999').mask('#NumeroCartao');
+        });
+    </script>
+</body>
+</html>
