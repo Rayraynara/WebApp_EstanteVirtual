@@ -194,7 +194,7 @@ namespace WebApp_EstanteVirtual.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteAccount()
+        public async Task<IActionResult> RemoverConta()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (userId == null)
