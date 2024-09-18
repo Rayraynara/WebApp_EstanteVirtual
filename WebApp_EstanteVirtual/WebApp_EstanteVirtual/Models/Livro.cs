@@ -18,6 +18,12 @@ namespace WebApp_EstanteVirtual.Models
 
         public bool Novo { get; set; }
 
+        public string Autor { get; set; }
+
+        public string AnoPublicacao { get; set; }
+
+        public string Classificacao { get; set; }
+
         public DateTime? DataVenda { get; set; }
     }
 }
