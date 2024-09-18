@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Raynara\\source\\repos\\WebApp_EstanteVirtual\\WebApp_EstanteVirtual\\WebApp_EstanteVirtual\\WebApp_EstanteVirtual.csproj": {}
+    "C:\\Users\\snmar\\source\\repos\\Rayraynara\\WebApp_EstanteVirtual\\WebApp_EstanteVirtual\\WebApp_EstanteVirtual\\WebApp_EstanteVirtual.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Raynara\\source\\repos\\WebApp_EstanteVirtual\\WebApp_EstanteVirtual\\WebApp_EstanteVirtual\\WebApp_EstanteVirtual.csproj": {
+    "C:\\Users\\snmar\\source\\repos\\Rayraynara\\WebApp_EstanteVirtual\\WebApp_EstanteVirtual\\WebApp_EstanteVirtual\\WebApp_EstanteVirtual.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Raynara\\source\\repos\\WebApp_EstanteVirtual\\WebApp_EstanteVirtual\\WebApp_EstanteVirtual\\WebApp_EstanteVirtual.csproj",
+        "projectUniqueName": "C:\\Users\\snmar\\source\\repos\\Rayraynara\\WebApp_EstanteVirtual\\WebApp_EstanteVirtual\\WebApp_EstanteVirtual\\WebApp_EstanteVirtual.csproj",
         "projectName": "WebApp_EstanteVirtual",
-        "projectPath": "C:\\Users\\Raynara\\source\\repos\\WebApp_EstanteVirtual\\WebApp_EstanteVirtual\\WebApp_EstanteVirtual\\WebApp_EstanteVirtual.csproj",
-        "packagesPath": "C:\\Users\\Raynara\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Raynara\\source\\repos\\WebApp_EstanteVirtual\\WebApp_EstanteVirtual\\WebApp_EstanteVirtual\\obj\\",
+        "projectPath": "C:\\Users\\snmar\\source\\repos\\Rayraynara\\WebApp_EstanteVirtual\\WebApp_EstanteVirtual\\WebApp_EstanteVirtual\\WebApp_EstanteVirtual.csproj",
+        "packagesPath": "C:\\Users\\snmar\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\snmar\\source\\repos\\Rayraynara\\WebApp_EstanteVirtual\\WebApp_EstanteVirtual\\WebApp_EstanteVirtual\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Raynara\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\snmar\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\sdk\\7.0.304\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -78,7 +79,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
         }
       }
     }
