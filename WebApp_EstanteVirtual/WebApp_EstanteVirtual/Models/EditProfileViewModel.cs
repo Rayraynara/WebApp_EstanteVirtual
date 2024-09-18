@@ -29,5 +29,7 @@ namespace WebApp_EstanteVirtual.Models
         public string? CEP { get; set; }
 
         public string? NumeroCartao { get; set; }
+
+        public string? FotoPerfil { get; set; }
     }
 }

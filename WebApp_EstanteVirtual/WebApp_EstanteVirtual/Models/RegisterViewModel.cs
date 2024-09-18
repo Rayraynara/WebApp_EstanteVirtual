@@ -25,5 +25,8 @@ namespace WebApp_EstanteVirtual.Models
         [Required(ErrorMessage = "O CPF é obrigatório.")]
         [StringLength(11, MinimumLength = 11, ErrorMessage = "O CPF deve ter 11 dígitos.")]
         public string CPF { get; set; }
+
+        [Url(ErrorMessage = "Por favor, insira uma URL válida.")]
+        public string? ProfilePicture { get; set; }
     }
 }

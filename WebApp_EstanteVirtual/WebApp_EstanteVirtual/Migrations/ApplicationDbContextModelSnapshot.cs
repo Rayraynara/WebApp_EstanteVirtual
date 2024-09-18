@@ -30,7 +30,19 @@ namespace WebApp_EstanteVirtual.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("AnoPublicacao")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Autor")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Capa")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Classificacao")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -77,6 +89,9 @@ namespace WebApp_EstanteVirtual.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Endereco")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FotoPerfil")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("IsAdmin")

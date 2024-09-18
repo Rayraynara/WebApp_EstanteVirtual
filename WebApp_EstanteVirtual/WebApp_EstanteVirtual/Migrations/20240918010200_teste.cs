@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebApp_EstanteVirtual.Migrations
 {
-    public partial class NovaMigrationEstanteVirtual : Migration
+    public partial class teste : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -21,6 +21,9 @@ namespace WebApp_EstanteVirtual.Migrations
                     QuantidadeEstoque = table.Column<int>(type: "int", nullable: false),
                     Capa = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Novo = table.Column<bool>(type: "bit", nullable: false),
+                    Autor = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AnoPublicacao = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Classificacao = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DataVenda = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -41,7 +44,8 @@ namespace WebApp_EstanteVirtual.Migrations
                     Endereco = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CEP = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NumeroCartao = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsAdmin = table.Column<bool>(type: "bit", nullable: true)
+                    IsAdmin = table.Column<bool>(type: "bit", nullable: true),
+                    FotoPerfil = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

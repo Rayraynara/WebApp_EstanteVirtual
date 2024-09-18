@@ -32,9 +32,11 @@
                 <ul class="navbar-nav ms-auto align-items-center">
                     @if (User.Identity.IsAuthenticated)
                     {
+                        var fotoPerfil = User.FindFirst("FotoPerfil")?.Value ?? "https://pbs.twimg.com/media/ED5RbgNWsAIRbD8.png";
+
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="https://pbs.twimg.com/media/ED5RbgNWsAIRbD8.png" alt="Perfil" class="rounded-circle me-2" style="width: 40px; height: 40px; object-fit: cover;">
+                                <img src="@fotoPerfil" alt="Perfil" class="rounded-circle me-2" style="width: 80px; height: 80px; object-fit: cover;">
                                 <span>Olá, @User.Identity.Name!</span>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="userDropdown">
@@ -47,6 +49,7 @@
                             </ul>
                         </li>
                     }
+
                     else
                     {
                         <li class="nav-item">

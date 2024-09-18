@@ -12,8 +12,8 @@ using WebApp_EstanteVirtual.Data;
 namespace WebApp_EstanteVirtual.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240914230808_NovaMigrationEstanteVirtual")]
-    partial class NovaMigrationEstanteVirtual
+    [Migration("20240918010200_teste")]
+    partial class teste
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,7 +32,19 @@ namespace WebApp_EstanteVirtual.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("AnoPublicacao")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Autor")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Capa")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Classificacao")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -79,6 +91,9 @@ namespace WebApp_EstanteVirtual.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Endereco")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FotoPerfil")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("IsAdmin")

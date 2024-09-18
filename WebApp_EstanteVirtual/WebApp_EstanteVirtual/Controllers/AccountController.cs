@@ -36,7 +36,8 @@ namespace WebApp_EstanteVirtual.Controllers
                     Email = model.Email,
                     CPF = model.CPF,
                     Senha = CryptographyService.EncryptPassword(model.Password),
-                    IsAdmin = false
+                    IsAdmin = false,
+                    FotoPerfil = model.ProfilePicture
                 };
 
                 _context.Usuarios.Add(user);
@@ -72,7 +73,8 @@ namespace WebApp_EstanteVirtual.Controllers
                     new Claim(ClaimTypes.Name, user.Nome),
                     new Claim(ClaimTypes.Email, user.Email),
                     new Claim(ClaimTypes.Role, user.IsAdmin == true ? "Admin" : "User"),
-                    new Claim(ClaimTypes.NameIdentifier, user.Id)
+                    new Claim(ClaimTypes.NameIdentifier, user.Id),
+                    new Claim("FotoPerfil", user.FotoPerfil ?? "")
                     };
 
                     var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -128,7 +130,8 @@ namespace WebApp_EstanteVirtual.Controllers
                 Telefone = user.Telefone,
                 Endereco = user.Endereco,
                 CEP = user.CEP,
-                NumeroCartao = user.NumeroCartao
+                NumeroCartao = user.NumeroCartao,
+                FotoPerfil = user.FotoPerfil
             };
 
             return View(model);
@@ -174,6 +177,11 @@ namespace WebApp_EstanteVirtual.Controllers
                 if (!string.IsNullOrEmpty(model.NumeroCartao))
                 {
                     user.NumeroCartao = model.NumeroCartao;
+                }
+
+                if (!string.IsNullOrEmpty(model.FotoPerfil))
+                {
+                    user.FotoPerfil = model.FotoPerfil;
                 }
 
                 _context.Usuarios.Update(user);

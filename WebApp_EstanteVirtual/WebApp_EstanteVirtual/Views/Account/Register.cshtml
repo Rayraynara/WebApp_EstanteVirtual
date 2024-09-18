@@ -40,6 +40,13 @@
                 <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Confirme sua senha" />
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="ProfilePicture">URL da Imagem de Perfil</label>
+                <input asp-for="ProfilePicture" class="form-control" placeholder="Digite a URL da imagem de perfil (opcional)" />
+                <span asp-validation-for="ProfilePicture" class="text-danger"></span>
+            </div>
+
             <a href="/">Já tem uma conta? Faça login</a>
             <input type="submit" value="Cadastrar" class="btn" />
         </form>
