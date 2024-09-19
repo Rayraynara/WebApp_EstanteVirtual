@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using WebApp_EstanteVirtual.Data;
 using WebApp_EstanteVirtual.Models;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 public class VendasController : Controller
@@ -31,7 +33,6 @@ public class VendasController : Controller
             return NotFound();
         }
 
-        // pag detalhes de pagamento
         return View("DetalhesPagamento", new CompraViewModel { LivroId = id, Livro = livro });
     }
 
@@ -70,9 +71,46 @@ public class VendasController : Controller
         }
     }
 
-    // relatórios de vendas
-    //public IActionResult RelatorioVendas()
-    //{
-    //   return View();
-    //}
+    [Authorize(Roles = "Admin")]
+    public IActionResult VendasRelatorio(string periodo)
+    {
+        var viewModel = new VendasRelatorioViewModel
+        {
+            PeriodoSelecionado = periodo
+        };
+
+        DateTime dataInicio = DateTime.Now;
+        DateTime dataFim = DateTime.Now;
+
+        //melhorar filtro ainda
+        switch (periodo)
+        {
+            case "diario":
+                dataInicio = DateTime.Now.Date;
+                dataFim = DateTime.Now.Date.AddDays(1).AddTicks(-1);
+                break;
+            case "semanal":
+                dataInicio = DateTime.Now.Date.AddDays(-(int)DateTime.Now.DayOfWeek);
+                dataFim = dataInicio.AddDays(7).AddTicks(-1);
+                break;
+            case "mensal":
+                dataInicio = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                dataFim = dataInicio.AddMonths(1).AddTicks(-1);
+                break;
+            default:
+                dataInicio = DateTime.Now.Date;
+                dataFim = DateTime.Now.Date.AddDays(1).AddTicks(-1);
+                break;
+        }
+        var vendas = _context.Vendas
+            .Where(v => v.DataHora >= dataInicio && v.DataHora <= dataFim)
+            .ToList();
+
+        viewModel.Vendas = vendas;
+        viewModel.TotalVendido = vendas.Sum(v => v.Total);
+
+        return View(viewModel);
+    }
+
+
 }
