@@ -4,8 +4,8 @@
     padding: 0;
     color: #ff0676;
     background-color: #0581ab;
-    min-height: 100vh; 
-
+    min-height: 100vh;
+}
 .space {
     display: flex;
     flex-direction: column;
