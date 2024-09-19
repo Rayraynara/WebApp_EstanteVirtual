@@ -1,0 +1,102 @@
+﻿body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #ff0676;
+    background-color: #0581ab;
+    min-height: 100vh; /* Garante que o body ocupe pelo menos 100% da altura da tela */
+}
+
+.space {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 7px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.4);
+    width: 100%;
+    max-width: 600px; /* Ajusta a largura máxima */
+}
+
+.page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh; /* Ocupa toda a altura da tela */
+    padding: 20px;
+    box-sizing: border-box; /* Inclui padding e border no cálculo da largura e altura */
+    background-color: #0581ab; /* Cor de fundo da página */
+}
+
+.formLogin {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Define duas colunas de tamanho igual */
+    grid-gap: 15px; /* Espaço entre os elementos */
+    background-color: #fff;
+    border-radius: 7px;
+    padding: 40px;
+    width: 100%;
+    max-width: 600px; /* Ajusta a largura máxima */
+}
+
+    /* Define que o título e o botão devem ocupar as duas colunas */
+    .formLogin h1 {
+        grid-column: 1 / -1;
+        text-align: center;
+        font-weight: 500;
+        font-size: 2.3em;
+    }
+
+    .formLogin input[type="submit"] {
+        grid-column: 1 / -1;
+        background-color: #f72585;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 600;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        transition: all linear 160ms;
+        text-align: center;
+        border-radius: 10px; /* Ajuste o valor para maior arredondamento */
+    }
+
+        .formLogin input[type="submit"]:hover {
+            transform: scale(1.05);
+            background-color: #ff0676;
+        }
+
+    .formLogin a {
+        grid-column: 1 / -1;
+        text-align: center;
+        font-size: 13px;
+        color: #555;
+    }
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.formLogin label {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.formLogin input {
+    width: 100%; /* Faz com que o input ocupe toda a largura disponível */
+    padding: 10px; /* Ajusta o padding interno, garantindo que o conteúdo tenha um espaço interno adequado */
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: all linear 160ms;
+    box-sizing: border-box; /* Inclui padding e border no cálculo da largura total */
+}
+
+    .formLogin input:focus {
+        border: 1px solid #f72585;
+    }
