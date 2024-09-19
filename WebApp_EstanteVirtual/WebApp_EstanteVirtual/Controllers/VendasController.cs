@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WebApp_EstanteVirtual.Data;
 using WebApp_EstanteVirtual.Models;
+using System.Linq;
 
 public class VendasController : Controller
 {
@@ -30,15 +31,16 @@ public class VendasController : Controller
             return NotFound();
         }
 
-        return View(livro);
+        // pag detalhes de pagamento
+        return View("DetalhesPagamento", new CompraViewModel { LivroId = id, Livro = livro });
     }
 
     [HttpPost]
     [Authorize]
     [ValidateAntiForgeryToken]
-    public IActionResult Comprar(int id, [FromForm] CompraViewModel model)
+    public IActionResult ConfirmarCompra(CompraViewModel model)
     {
-        var livro = _context.Livros.Find(id);
+        var livro = _context.Livros.Find(model.LivroId);
         if (livro == null)
         {
             return NotFound();
@@ -58,12 +60,19 @@ public class VendasController : Controller
             _context.Vendas.Add(venda);
             _context.SaveChanges();
 
-            return RedirectToAction("LivrosDisponiveis"); // Redirecionado para a view de compras
+            TempData["MensagemSucesso"] = "Compra concluída com sucesso!";
+            return RedirectToAction("Comprar", new { id = model.LivroId });
         }
         else
         {
             ModelState.AddModelError("", "Este livro não está mais disponível no estoque.");
-            return View(livro);
+            return View("DetalhesPagamento", model);
         }
     }
+
+    // relatórios de vendas
+    //public IActionResult RelatorioVendas()
+    //{
+    //   return View();
+    //}
 }

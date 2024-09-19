@@ -2,3 +2,35 @@
 @model WebApp_EstanteVirtual.Views.Vendas.VendasRelatorioModel
 @{
 }
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Vendas</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center mt-5">Relatório de Vendas</h2>
+        <form asp-action="RelatorioVendas" method="get" class="mt-4">
+            <div class="mb-3">
+                <label for="Periodo" class="form-label">Período</label>
+                <select class="form-select" id="Periodo" name="Periodo">
+                    <option value="diario">Diário</option>
+                    <option value="semanal">Semanal</option>
+                    <option value="mensal">Mensal</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Gerar Relatório</button>
+        </form>
+        <div class="mt-5">
+            <!-- Aqui você pode exibir o relatório gerado -->
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+</body>
+</html>
