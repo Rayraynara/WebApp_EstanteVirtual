@@ -86,5 +86,12 @@
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/js/main.js"></script>
+
+    <script>
+        document.querySelector('.formCadastroLivro').addEventListener('submit', function (event) {
+            var precoInput = document.getElementById('preco');
+            precoInput.value = precoInput.value.replace(',', '.');
+        });
+    </script>
 </body>
 </html>
