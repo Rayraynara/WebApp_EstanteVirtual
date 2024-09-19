@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"]</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/editarConta.css">
 </head>
 <body>
     <header>
@@ -42,48 +43,55 @@
         </nav>
     </header>
 
-    <div class="container mt-5">
-        <h2>Editar Conta</h2>
-        @if (TempData["SuccessMessage"] != null)
-        {
-            <div class="alert alert-success">
-                @TempData["SuccessMessage"]
-            </div>
-        }
-        <form asp-action="EditarConta" method="post">
-            <div class="mb-3">
-                <label for="Nome" class="form-label">Nome</label>
-                <input type="text" class="form-control" id="Nome" name="Nome" value="@Model.Nome">
-                <span asp-validation-for="Nome" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label for="Email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="Email" name="Email" value="@Model.Email">
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label for="Telefone" class="form-label">Telefone</label>
-                <input type="text" class="form-control" id="Telefone" name="Telefone" value="@Model.Telefone">
-            </div>
-            <div class="mb-3">
-                <label for="Endereco" class="form-label">Endereco</label>
-                <input type="text" class="form-control" id="Endereco" name="Endereco" value="@Model.Endereco">
-            </div>
-            <div class="mb-3">
-                <label for="CEP" class="form-label">CEP</label>
-                <input type="text" class="form-control" id="CEP" name="CEP" value="@Model.CEP">
-            </div>
-            <div class="mb-3">
-                <label for="NumeroCartao" class="form-label">Número do Cartão</label>
-                <input type="text" class="form-control" id="NumeroCartao" name="NumeroCartao" value="@Model.NumeroCartao">
-            </div>
+    <div class="page">
+        <div class="container mt-5">
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success text-center">
+                    @TempData["SuccessMessage"]
+                </div>
+            }
+            <form asp-action="EditarConta" method="post" class="centered-form formEditarConta">
+                <h2 class="text-center">Editar Conta</h2>
+                <div class="mb-3">
+                    <label for="Nome" class="form-label">Nome</label>
+                    <input type="text" class="form-control" id="Nome" name="Nome" value="@Model.Nome">
+                    <span asp-validation-for="Nome" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="Email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="Email" name="Email" value="@Model.Email">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="Telefone" class="form-label">Telefone</label>
+                    <input type="text" class="form-control" id="Telefone" name="Telefone" value="@Model.Telefone">
+                </div>
+                <div class="mb-3">
+                    <label for="Endereco" class="form-label">Endereco</label>
+                    <input type="text" class="form-control" id="Endereco" name="Endereco" value="@Model.Endereco">
+                </div>
+                <div class="mb-3">
+                    <label for="CEP" class="form-label">CEP</label>
+                    <input type="text" class="form-control" id="CEP" name="CEP" value="@Model.CEP">
+                </div>
+                <div class="mb-3">
+                    <label for="NumeroCartao" class="form-label">Número do Cartão</label>
+                    <input type="text" class="form-control" id="NumeroCartao" name="NumeroCartao" value="@Model.NumeroCartao">
+                </div>
 
-            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-        </form>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                </div>
 
-        <form method="post" class="mt-4">
-            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">Remover Conta</button>
-        </form>
+                <br />
+
+                <div class="text-center">
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" style="background-color: red;">Remover Conta</button>
+                </div>
+            </form>
+
+        </div>
     </div>
 
     <!-- Modal de Confirmação de Remoção de Conta/Usuário -->
@@ -111,7 +119,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/inputmask@5.0.8/dist/inputmask.min.js"></script>
-    
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             Inputmask('(99) 99999-9999').mask('#Telefone');

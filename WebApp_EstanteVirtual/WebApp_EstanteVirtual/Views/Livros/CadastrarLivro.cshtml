@@ -10,6 +10,45 @@
     <link rel="stylesheet" href="~/css/cadastro.css">
 </head>
 <body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Estante Virtual</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Início</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto align-items-center">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        var fotoPerfil = !string.IsNullOrEmpty(User.FindFirst("FotoPerfil")?.Value)
+                        ? User.FindFirst("FotoPerfil").Value
+                        : "https://pbs.twimg.com/media/ED5RbgNWsAIRbD8.png";
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="@fotoPerfil" alt="Perfil" class="rounded-circle me-2" style="width: 80px; height: 80px; object-fit: cover;">
+                                <span>Olá, @User.Identity.Name!</span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="@Url.Action("EditarConta", "Account")">Editar Conta</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("Logout", "Account")">Logout</a></li>
+                            </ul>
+                        </li>
+                    }
+
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Login", "Account")">Login</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </nav>
+    </header>
+
     <div class="page">
         <form asp-action="CadastrarLivro" method="post" enctype="multipart/form-data" class="formCadastroLivro">
             <h1>Cadastro de Livro</h1>
