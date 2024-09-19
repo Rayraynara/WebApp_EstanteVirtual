@@ -20,7 +20,7 @@ namespace WebApp_EstanteVirtual.Models
 
         public string Autor { get; set; }
 
-        public string AnoPublicacao { get; set; }
+        public int AnoPublicacao { get; set; }
 
         public string Classificacao { get; set; }
 

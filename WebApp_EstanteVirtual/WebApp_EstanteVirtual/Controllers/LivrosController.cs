@@ -21,6 +21,7 @@ namespace WebApp_EstanteVirtual.Controllers
             return View(livros);
         }
 
+
         public IActionResult CadastrarLivro()
         {
             return View();
@@ -47,12 +48,67 @@ namespace WebApp_EstanteVirtual.Controllers
 
                 _context.Livros.Add(livro);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Home");
             }
             return View(model);
         }
 
         public async Task<IActionResult> EditarLivro(int id)
+        {
+            var livro = await _context.Livros.FindAsync(id);
+            if (livro == null)
+            {
+                return NotFound();
+            }
+
+            var model = new EditarLivroViewModel
+            {
+                Id = livro.Id,
+                Nome = livro.Nome,
+                Preco = livro.Preco,
+                Editora = livro.Editora,
+                QuantidadeEstoque = livro.QuantidadeEstoque,
+                Novo = livro.Novo,
+                Classificacao = livro.Classificacao,
+                AnoPublicacao = livro.AnoPublicacao,
+                Autor = livro.Autor,
+                Capa = livro.Capa
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditarLivro(EditarLivroViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var livro = await _context.Livros.FindAsync(model.Id);
+
+                if (livro == null)
+                {
+                    return NotFound();
+                }
+
+                livro.Nome = model.Nome;
+                livro.Preco = model.Preco;
+                livro.Editora = model.Editora;
+                livro.QuantidadeEstoque = model.QuantidadeEstoque;
+                livro.Novo = model.Novo;
+                livro.Classificacao = model.Classificacao;
+                livro.AnoPublicacao = model.AnoPublicacao;
+                livro.Autor = model.Autor;
+                livro.Capa = model.Capa;
+
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index", "Home");
+            }
+            return View(model);
+        }
+
+
+        /*public async Task<IActionResult> EditarLivro(int id)
         {
             var livro = await _context.Livros.FindAsync(id);
             if (livro == null)
@@ -104,7 +160,7 @@ namespace WebApp_EstanteVirtual.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
-        }
+        }*/
 
         public async Task<IActionResult> RemoverLivro(int id)
         {

@@ -30,9 +30,8 @@ namespace WebApp_EstanteVirtual.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("AnoPublicacao")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("AnoPublicacao")
+                        .HasColumnType("int");
 
                     b.Property<string>("Autor")
                         .IsRequired()

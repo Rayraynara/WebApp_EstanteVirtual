@@ -12,8 +12,8 @@ using WebApp_EstanteVirtual.Data;
 namespace WebApp_EstanteVirtual.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240918010200_teste")]
-    partial class teste
+    [Migration("20240919005216_Teste")]
+    partial class Teste
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,9 +32,8 @@ namespace WebApp_EstanteVirtual.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("AnoPublicacao")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("AnoPublicacao")
+                        .HasColumnType("int");
 
                     b.Property<string>("Autor")
                         .IsRequired()

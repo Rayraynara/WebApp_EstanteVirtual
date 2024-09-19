@@ -89,7 +89,7 @@
                             {
                                 if (User.IsInRole("Admin"))
                                 {
-                                    <a href="@Url.Action("Editar", "Livros", new { id = livro.Id })" class="btn btn-warning btn-block">Editar Livro</a>
+                                    <a href="@Url.Action("EditarLivro", "Livros", new { id = livro.Id })" class="btn btn-warning btn-block">Editar Livro</a>
                                 }
                                 else
                                 {

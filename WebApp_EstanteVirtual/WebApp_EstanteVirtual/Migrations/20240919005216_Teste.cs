@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebApp_EstanteVirtual.Migrations
 {
-    public partial class teste : Migration
+    public partial class Teste : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -22,7 +22,7 @@ namespace WebApp_EstanteVirtual.Migrations
                     Capa = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Novo = table.Column<bool>(type: "bit", nullable: false),
                     Autor = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AnoPublicacao = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AnoPublicacao = table.Column<int>(type: "int", nullable: false),
                     Classificacao = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DataVenda = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },

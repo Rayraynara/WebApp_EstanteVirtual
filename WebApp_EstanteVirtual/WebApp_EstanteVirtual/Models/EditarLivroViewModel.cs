@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Http;
 
 namespace WebApp_EstanteVirtual.Models
 {
-    public class LivroViewModel
+    public class EditarLivroViewModel
     {
         public int Id { get; set; }
 
