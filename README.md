@@ -60,9 +60,9 @@ O sistema de comércio eletrônico de livros novos e usados tem como objetivo fo
 ### 4. Restrições
 
 - **Padrão Arquitetural:** 
-  O sistema será desenvolvido utilizando uma arquitetura de aplicação web, seguindo os princípios do modelo Cliente-Servidor.
+O sistema será desenvolvido utilizando uma arquitetura de aplicação web, seguindo os princípios do padrão MVC (Model-View-Controller).
   
 - **Frameworks e Persistência:** 
-  Será utilizado um framework de desenvolvimento web (por exemplo React, Express, Angular, Django, Ruby on Rails) juntamente com um sistema de gerenciamento de banco de dados (por exemplo, MySQL, PostgreSQL) para persistência dos dados.
+O sistema foi desenvolvido utilizando HTML e CSS no front-end, sem o uso de frameworks de desenvolvimento web. No back-end, foi implementado em C# com ASP.NET Core, utilizando o Entity Framework para a manipulação de dados. O SQL Server foi utilizado como o sistema de gerenciamento de banco de dados para persistência dos dados.
 
 Para mais detalhes, consulte o [Documento de Requisitos - Projeto Integrador III](https://docs.google.com/document/d/1D7Bxuh2fgGddgJQnTyjALp0L_)
